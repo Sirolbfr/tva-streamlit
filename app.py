@@ -117,16 +117,26 @@ st.plotly_chart(fig)
 # ÉTAPE 4 — D'où viennent les erreurs ?
 # =============================================================================
 st.subheader("D'où viennent les erreurs ?")
-# TODO GRAPHIQUES (étape 4) : avec taux_invalides(selection, "source_saisie"), puis "pays_declare",
-#          deux graphiques en barres horizontales avec la valeur écrite sur chaque barre,
-#          puis une phrase (st.caption) qui explique quel canal sort du lot.
+# TODO GRAPHIQUES (étape 4) : avec taux_invalides(selection, "source_saisie"), puis "pays_declare", deux graphiques en barres horizontales avec la valeur écrite sur chaque barre, puis une phrase (st.caption) qui explique quel canal sort du lot.
+
+taux = taux_invalides(selection, "source_saisie")
+fig = px.bar(taux, x="taux d'erreur (%)", y="source_saisie", orientation="h", text="taux d'erreur (%)", title="Part de numéros invalides par canal de saisie")
+st.plotly_chart(fig)
+st.caption("On voit que reprise_erp a un taux d'invalides plus élevé que les autres, sûrement à cause de l'ancienneté des codes")
+
+taux = taux_invalides(selection, "pays_declare")
+fig = px.bar(taux, x="taux d'erreur (%)", y="pays_declare", orientation="h", text="taux d'erreur (%)", title="Part de numéros invalides par pays")
+st.plotly_chart(fig)
+st.caption("On voit que certains pays ont un taux d'invalides plus élevé que les autres, car certains n'existent pas et d'autres (UK et GB) ne font plus partie de la base de données.")
 
 # =============================================================================
 # ÉTAPE 5 — Les numéros à traiter
 # =============================================================================
 st.subheader("Numéros à traiter")
-# TODO A_TRAITER (étape 5) : la liste des invalides et des non tranchés, avec une colonne « action »,
-#          et un bouton pour la télécharger.
+# TODO A_TRAITER (étape 5) : la liste des invalides et des non tranchés, avec une colonne « action », et un bouton pour la télécharger.
+
+
+
 
 # Déjà écrit : les données brutes, cachées par défaut.
 with st.expander("Voir toutes les données"):
