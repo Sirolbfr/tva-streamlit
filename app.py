@@ -179,32 +179,36 @@ with tab3:
 # BONUS
 # ===========================================================================
 
-st.header("Graphs bonus")
+with tab4 :
+    st.header("Graphs bonus")
 
-df_2 = df[df["temps_reponse_ms"] < 20000] # J'ai retiré des valeurs bugguées ? qui atteignaient 30s de temps de réponse, sûrement les calls de l'API où le timeout s'est déclenché.
-fig = px.box(
-    df_2,
-    x="pays_declare",
-    y="temps_reponse_ms",
-    color="pays",
-    points="outliers",
-    title="Distribution des temps de réponse par pays",
-    labels={
-        "pays": "Pays",
-        "temps_reponse_sec": "Temps de réponse (s)"
-    },
-)
-fig.update_layout(boxmode="overlay")
-st.plotly_chart(fig)
-st.caption("Les valeurs atteignant 30000ms (Timeout) ont été évincées par souci de lisibilité.")
+    df_2 = df[df["temps_reponse_ms"] < 20000] # J'ai retiré des valeurs bugguées ? qui atteignaient 30s de temps de réponse, sûrement les calls de l'API où le timeout s'est déclenché.
+    fig = px.box(
+        df_2,
+        x="pays_declare",
+        y="temps_reponse_ms",
+        color="pays",
+        points="outliers",
+        title="Distribution des temps de réponse par pays",
+        labels={
+            "pays": "Pays",
+            "temps_reponse_sec": "Temps de réponse (s)"
+        },
+    )
+    fig.update_layout(boxmode="overlay")
+    st.plotly_chart(fig)
+    st.caption("Les valeurs atteignant 30000ms (Timeout) ont été évincées par souci de lisibilité.")
 
-nombre_nt = (
-    df[df["statut"]=="non_tranche"]
-    .groupby("pays_declare")
-    .size()
-    .reset_index(name="Nombre")
-    .sort_values("Nombre", ascending=True)
-)
-fig = px.bar(nombre_nt, x="Nombre", y="pays_declare", orientation="h", text="Nombre", title="Nombre de non tranchés par pays")
-st.plotly_chart(fig)
-st.caption("On peut donc voir que le nombre de non-tranchés est anormalement élevé en Italie.")
+    nombre_nt = (
+        df[df["statut"]=="non_tranche"]
+        .groupby("pays_declare")
+        .size()
+        .reset_index(name="Nombre")
+        .sort_values("Nombre", ascending=True)
+    )
+    fig = px.bar(nombre_nt, x="Nombre", y="pays_declare", orientation="h", text="Nombre", title="Nombre de non tranchés par pays")
+    st.plotly_chart(fig)
+    st.caption("On peut donc voir que le nombre de non-tranchés est anormalement élevé en Italie.")
+
+
+# Lien application déployée : https://tva-vies-api.streamlit.app/
